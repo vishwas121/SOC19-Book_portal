@@ -1,0 +1,27 @@
+{% extends 'base_layout.html' %}
+
+
+{% block content %}
+  <div class="Catalogue">
+    <h1>Catalogue</h1>
+    <p> Here comes the list of books available </p>
+    <table class="books">
+      <tr>
+        <th>Book Name</th>
+        <th>Book author</th>
+        <th>Book Barcode</th>
+        <th>Book Issued to</th>
+      </tr>
+      {% for book in catalogue %}
+      <tr>
+        <td>{{book.book_name}}</td>
+        <td>{{book.book_author}}</td>
+        <td>{{book.book_barcode}}</td>
+        <td>{{book.book_taker}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </div>
+
+{% endblock %}
