@@ -7,5 +7,4 @@ from .models import Book
 
 class BookView(viewsets.ModelViewSet):
     serializer_class = BookSerializer
-    queryset = Book.objects.all().order_by('id')
-     
+    queryset = Book.objects.all().order_by('title')
