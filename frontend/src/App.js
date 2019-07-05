@@ -1,52 +1,34 @@
 import React ,{Component} from 'react';
-import axios from 'axios';
+import Catalogue from './catalogue';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch,NavLink } from 'react-router-dom';
+
+
 class App extends Component{
- constructor( props){
-   super(props);
-   this.state = {
-     item :{
-       title : "",
-       author: "",
-       barcode : "",
-       status : false
-     },
-     book : []
-   }
-  }
-componentDidMount(){
-   this.getdata();
-}
-getdata = () => {
-  axios
-          .get("api/catalogue/") 
-          .then(res => this.setState({ book: res.data}))
-          .catch(err => console.log(err));
-}
-renderbooks = () => {
-  const item = this.state.book;
-  return item.map(func => (
-    <tr>
-    <td>{ func.id }</td>
-    <td>{func.title}</td>
-</tr>
-  ));
-};
+//  constructor(props){
+  //  super(props);
+  //}
   render(){
-    return (
-      <div className='home'>
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Author</th>
-          </tr>
-          { this.renderbooks() }
-        </table>
-   
-      </div>
-    );
-  }
+    return(
+      <Router>
+        <div>
+          <Switch>
+            <Route exact path="/" component={ Home }/>
+            <Route path="/catalogue" component={ Catalogue } />
+            <Route render = { () => <h1>Not found</h1>} />
+          </Switch>
+        </div>
+      </Router>
+    )
+  };
+
 }
+const Home = (props) => (
+  <div>
+    <h1>This will be the homepage.</h1>
+    {console.log(props)}
+    <NavLink to="/catalogue"> Catalogue</NavLink>
+  </div>
+);
+
 export default App;
-
-
-
