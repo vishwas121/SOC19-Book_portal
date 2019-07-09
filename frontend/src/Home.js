@@ -1,40 +1,15 @@
 import React,{Component} from 'react';
-import {Nav,center} from 'react-bootstrap';
-import Navbar from 'react-bootstrap/Navbar';
-//import { ReactComponent as Logo} from './bookclulogo.svg';
 
-class Home extends Component{
+export default class Home extends Component{
   render() {
   return (
-    <>
-  <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-  <Navbar.Brand href="/">Book Club IITK</Navbar.Brand>
-  <Navbar.Toggle aria-controls="responsive-navbar-nav" ></Navbar.Toggle>
-  <Navbar.Collapse id="responsive-navbar-nav">
-    <Nav className="mr-auto">
-      <Nav.Link href="/catalogue">Catalogue</Nav.Link>
-    </Nav>
-    <Nav>
-       <Nav.Link href="#pricing">Rules</Nav.Link>
-    </Nav>
-    <Nav>
-      <Nav.Link href="/addbook">Add Delete</Nav.Link>
-
-
-    </Nav>
-    <Nav.Link href="#signin">Sign In</Nav.Link><br/>
-    <Nav.Link href="#signup">Sign Up</Nav.Link>
-
-  </Navbar.Collapse>
-</Navbar>
-<br/>
-
-<div style={{border:'0.5px solid darkgray', padding:'10px',}} >
-      <center><h4>Book Club Timings</h4>
-      Semester: 9 pm to 10 pm, everyday<br/>
-      Summers: 8:30 pm to 10:30 pm, weekends</center>
+	<div>
+    <div style={{border:'0.5px solid darkgray', padding:'10px',}} >
+      	 <center><h4>Book Club Timings</h4>
+      	Semester: 9 pm to 10 pm, everyday<br/>
+     	 Summers: 8:30 pm to 10:30 pm, weekends</center>
     </div>
-    <h3><center> About us</center> </h3>
+        <h3><center> About you</center> </h3>
         <p>
           People read for various reasons. Some read to broaden their perspective of the world and learn new things, some read to learn how to articulate their thoughts, some read to get inspiration, some read to get their mind free and see faraway places through the eye of their mind, some read to relax their mind after a tiring day full of hard work, deadlines and reports, while some read just for fun.
         </p>
@@ -57,10 +32,8 @@ class Home extends Component{
     <div class="container">
       "There is no friend as loyal as a book." - Ernest Hemingway
     </div>
-  </div>
-
-  </>
+    </div>
+	</div>
   );
   }
 }
-export default Home;

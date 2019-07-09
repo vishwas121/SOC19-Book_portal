@@ -4,13 +4,16 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@material-ui/core": "^4.2.0",
+    "@material-ui/icons": "^4.2.1",
     "axios": "^0.19.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-facebook": "^8.0.4",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "react-search-input": "^0.11.3"
+    "react-search-input": "^0.11.3",
+    "yarn": "^1.16.0"
   },
   "scripts": {
     "start": "react-scripts start",

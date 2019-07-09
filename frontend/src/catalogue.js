@@ -10,7 +10,9 @@ class Catalogue extends Component {
        title : "",
        author: "",
        barcode : "",
-       status : false
+       status : false,
+       issue_date:"",
+       issued_to:''
      },
      book : [],
    }
@@ -18,7 +20,19 @@ class Catalogue extends Component {
 
   componentDidMount(){
     this.getdata();
+
   }
+  /*
+  setdate = ()=>{
+      this.state.book.map(item => (
+          date = item.date;
+          date.setDate( date + 7);
+          this.setState(dates:date);
+      ))
+  }
+  */
+
+
   getdata = () => {
     axios
           .get("api/catalogue/")
@@ -100,14 +114,17 @@ render() {
             									<th >Author</th>
             									<th>Barcode</th>
             									<th>Available</th>
-    
+                              <th>Issued to</th>
+                              <th>Due date</th>
             								</tr>
                     {this.state.filtered.map(item => (
                             <tr >
                                 <td>{item.title}</td>
                                 <td>{item.author}</td>
                                 <td >{item.barcode}</td>
-          		                  <td>{item.status ? "no":"yes"}</td>
+          		                  <td>{item.status ? "yes":"no"}</td>
+                                 <td>{item.status ? "": item.issued_to}</td>
+                                 <td>{item.status ?"": item.issue_date }</td>
                             </tr>
                     ))}
                   </table>

@@ -10,7 +10,7 @@ export default class Staff extends Component{
         title : "",
         author: "",
         barcode : "",
-        status : false
+        status : true
       },
       newbook:[],
       activebook : []
@@ -28,12 +28,17 @@ export default class Staff extends Component{
 
   addBook = () => {
     const thing = this.state.new_book;
-    var x =this.search(thing);
-    if(x===0||x===-1){
+    var x =this.search(thing,true);
+    if(x===1){
+      if(thing.title===''){
+        alert("no title");
+      }
+      else{
       axios
        .post("http://localhost:8000/api/catalogue/",thing)
        .then(res => this.getdata())
-       .catch(err => console.log(err));
+       .catch(err => alert("field missing or already there"));
+      }
     }
     else{
       alert("already exists");
@@ -42,13 +47,14 @@ export default class Staff extends Component{
 
   deleteBook = () => {
     let item = this.state.new_book;
-    var id = this.search(item);
+    var id = this.search(item,false);
     if ((id !==0) && (id !==-1)){
-      var net = toString();
+      var net = id.toString();
       var ur = "http://localhost:8000/api/catalogue/" + net;
+      alert(ur);
       axios
       .delete(ur)
-      .then(res => alert("deleted"+item.title));
+      .then(res => this.getdata());
     }
     else if(id ===0) {
       alert('no item found');
@@ -59,23 +65,37 @@ export default class Staff extends Component{
     
 
   };
-  search = item =>{
+  search = (item,x) =>{
       const list = this.state.activebook;
-      var filtered_item = list.filter(book => {
-          const lc = book.title.toLowerCase();
-          const filter = item.title.toLowerCase();
-        return lc.includes(filter);
-      } );
-      if(filtered_item.length ===1){
-        return filtered_item.id;
-      }
-      else if ( filtered_item.length === 0 ){
-        return 0;
+      var is_present = false;
+      const filter = item.title.toLowerCase();
+
+      if(x){
+      list.map(some => {
+        var lis = some.title.toLowerCase();
+        if(lis===filter)is_present = true;
+        return 0 ;
+        });
+      if(is_present){return 0;}
+      else return 1;
       }
       else{
-        return -1;
-      }
+            var filtered_item = list.filter(book => {
+            const lc = book.title.toLowerCase();
+            return lc.includes(filter);
+      		} );
+    
 
+      		if(filtered_item.length ===1){
+       		 	return filtered_item[0].id;
+     	 	}
+     		else if ( filtered_item.length === 0 ){
+       			return 0;
+     		}
+      		else{
+        		return -1;
+      		}
+		}
   }
 
 
@@ -103,21 +123,18 @@ export default class Staff extends Component{
           <input type="text" name="title" value={this.state.new_book.title} onChange={this.handleChange} placeholder="Title" />
           <input type="text" name="author" value={this.state.new_book.author} onChange={this.handleChange} placeholder="author" />
           <input type="text" name="barcode" value={this.state.new_book.barcode}  onChange={this.handleChange} placeholder="barcode" />
-          <input type="checkbox" name="status" value={this.state.new_book.status} onChange={this.handleChange}  placeholder="status" /><br/>
         </form>
         <table align='center'>
           <tr>
             <th>Title</th>
             <th>Author</th>
             <th>Barcode</th>
-            <th>Status</th>
           </tr>
           {this.state.activebook.map(item =>(
              <tr>
              <td>{item.title}</td>
              <td>{item.author}</td>
              <td>{item.barcode}</td>
-             <td>{item.status?"no":"yes"}</td>
            </tr>
           ) )}
           </table>
