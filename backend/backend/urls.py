@@ -7,7 +7,7 @@ router = routers.DefaultRouter()
 
 router.register(r'users',viewsu.UserView,'user_list')
 router.register(r'catalogue' ,viewsc.BookView , 'book_list')
-
+router.register(r'circulation',viewsu.CirculationView,'circulate')
 
 
 urlpatterns = [

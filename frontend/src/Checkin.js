@@ -16,7 +16,8 @@ export default class Check extends Component {
         bar_checkout : "",
         date_checkout: "",
         books: [],
-        users:[]
+        users:[],
+        circulation_books : []
       };
     
       this.checkin = this.checkin.bind(this);
@@ -29,6 +30,7 @@ export default class Check extends Component {
       this.handleBar_checkout= this.handleBar_checkout.bind(this);
       this.handleDate_checkout= this.handleDate_checkout.bind(this);
       this.search_user = this.search_user.bind(this);
+      this.search_circulation = this.search_circulation.bind(this);
         }
 
     handleBar_checkin(e) {
@@ -59,9 +61,14 @@ export default class Check extends Component {
               .then(res => this.setState({ books: res.data}))
               .catch(err => console.log(err));
         axios
+              .get("api/circulation/")
+              .then(res=> this.setState({circulation_books: res.data}))
+              .catch(err => console.log(err));
+        axios
               .get("api/users/")
               .then(res => this.setState({ users: res.data}))
               .catch(err => console.log(err));
+
       }
     
 
@@ -116,6 +123,21 @@ export default class Check extends Component {
                             </tr>
                         ))}
                     </table>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll No</th>
+                            <th>email</th>
+                        </tr>
+                        {this.state.users.map(item => (
+                            <tr >
+                                <td>{item.name}</td>
+                                <td>{item.roll_no}</td>
+                                <td >{item.email}</td>
+                            </tr>
+                        ))}
+                    </table>
+
                      </div>
 
                 </Col>
@@ -173,11 +195,18 @@ export default class Check extends Component {
             .catch(err=> console.log(err));
         }
     }
-    search_user(roll){
-        axios
-            .get("/api/users/user_search",{params:{roll_no:roll}})
-            .then(res => this.setState({work:res.data}))
-            .catch(err => console.log(err));
+    search_user(){
+        const roll=this.state.card_checkout;
+        const result = this.state.users.filter(item =>(
+            item.roll_no.includes(roll)
+        ));
+        return result[0];
+    }
+    search_circulation(username){
+        const result = this.state.circulation_books.filter(books=>(
+            books.username.includes(username)
+        ));
+        return result[0];
     }
     checkout(){
         const book = this.search_barcode_out();
@@ -189,13 +218,14 @@ export default class Check extends Component {
             .put(url,book)
             .then(res => alert(book.title+" checked out"))
             .catch(err=> console.log(err));
-
-        /*const user =this.search_user();
-        user.circulation_history = {'title': book.title,'author':book.author,'barcode':book.barcode,'status':book.status};
+        console.log("yes");
+        const user =this.search_user();
+        alert('yes');
+        const CH = this.search_circulation(user.roll_no);
         axios
-            .put("http://localhost:8000/api/users/${user.id}/",user)
+            .post("http://localhost:8000/api/circulation/",CH)
             .then(res => alert(book.title +"added to " + user.name))
-            .catch(err => console.log(err));*/
+            .catch(err => console.log(err));
 
     }
 
