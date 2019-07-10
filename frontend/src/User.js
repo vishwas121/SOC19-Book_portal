@@ -13,7 +13,7 @@ export default class User extends Component{
     }
     getdata = () => {
         axios
-          .get("api/users/")
+          .get("api/v1/users/")
           .then(res => this.setState({ users: res.data}))
           .catch(err => console.log(err));
     }
@@ -29,30 +29,15 @@ export default class User extends Component{
                     {this.state.users.map(user =>{
                         return (
                             <tr>
-                                <td>{user.name}</td>
-                                <td>{user.roll_no}</td>
+                                <td>{user.Username}</td>
+                                <td>{user.email}</td>
                                 <td>{user.password}</td>
                             </tr>
                         )
                     })}
                 </table>
                 <br/>
-                <table>
-                    <tr>
-                        <th>Book name</th>
-                        <th>Book author</th>
-                        <th>Book barcode</th>
-                    </tr>
-                    {this.state.users.map(user =>{
-                        return (
-                            <tr>
-                                <td>{user.circulation_history.title}</td>
-                                <td>{user.circulation_history.author}</td>
-                                <td>{user.circulation_history.barcode}</td>
-                            </tr>
-                        )
-                    })}
-                </table>
+                
             </div>
         )
     }

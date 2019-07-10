@@ -12,5 +12,6 @@ router.register(r'circulation',viewsu.CirculationView,'circulate')
 
 urlpatterns = [
     path('admin/',admin.site.urls),
-    path('api/',include(router.urls))
+    path('api/',include(router.urls)),
+    path('api/v1/',include('api.urls'))
 ]

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 class SignInForm extends Component {
     constructor(props) {
         super(props);
@@ -26,9 +26,14 @@ class SignInForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
-        console.log('The form was submitted with the following data:');
-        console.log(this.state);
+        const user ={
+            "username":this.state.roll,
+            "password":this.state.password
+        }
+        axios
+            .post('http://localhost:8000/api/v1/rest_auth/login/',user)
+            .then(res => alert('success'))
+            .catch(err=>console.log(err));
     }
 
     render() {
